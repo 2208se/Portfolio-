@@ -1,0 +1,1651 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Selssabila Kiouaz — Cybersecurity & AI Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root[data-theme="dark"] {
+  --bg: #050a0e;
+  --bg2: #0a1520;
+  --bg3: #0f1e2e;
+  --surface: #111d2b;
+  --surface2: #162436;
+  --border: #1e3448;
+  --text: #e8f4f8;
+  --text2: #8bb4cc;
+  --text3: #4a7a99;
+  --accent: #00d4ff;
+  --accent2: #00ff88;
+  --accent3: #ff4d6d;
+  --accent4: #f59e0b;
+  --glow: rgba(0,212,255,0.15);
+  --glow2: rgba(0,255,136,0.1);
+}
+:root[data-theme="light"] {
+  --bg: #f0f6fc;
+  --bg2: #e1eef9;
+  --bg3: #d2e5f5;
+  --surface: #ffffff;
+  --surface2: #f5faff;
+  --border: #c0d9ee;
+  --text: #0a1520;
+  --text2: #2a4a6a;
+  --text3: #5a8aaa;
+  --accent: #0077cc;
+  --accent2: #00994f;
+  --accent3: #cc1a35;
+  --accent4: #c77d00;
+  --glow: rgba(0,119,204,0.1);
+  --glow2: rgba(0,153,79,0.08);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Syne', sans-serif;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* CURSOR */
+.cursor {
+  position: fixed;
+  width: 12px; height: 12px;
+  background: var(--accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%,-50%);
+  transition: transform 0.1s, width 0.2s, height 0.2s, background 0.2s;
+  mix-blend-mode: difference;
+}
+.cursor-ring {
+  position: fixed;
+  width: 36px; height: 36px;
+  border: 1.5px solid var(--accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%,-50%);
+  transition: transform 0.15s ease-out, width 0.2s, height 0.2s;
+  opacity: 0.5;
+}
+
+/* SCAN LINES */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+  pointer-events: none;
+  z-index: 9997;
+}
+
+/* NOISE */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.4;
+  z-index: 9996;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 16px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  background: rgba(5,10,14,0.8);
+  transition: background 0.3s;
+}
+[data-theme="light"] nav { background: rgba(240,246,252,0.85); }
+
+.nav-logo {
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  color: var(--accent);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+.nav-logo span { color: var(--text3); }
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+  align-items: center;
+}
+.nav-links a {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: var(--text3);
+  text-decoration: none;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--accent); }
+
+.nav-controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.ctrl-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text3);
+  padding: 6px 14px;
+  border-radius: 3px;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: all 0.2s;
+}
+.ctrl-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--glow);
+}
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 120px 80px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 60px 60px;
+  opacity: 0.3;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
+}
+
+.hero-orb {
+  position: absolute;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--glow) 0%, transparent 70%);
+  top: -100px; right: -100px;
+  animation: pulse 8s ease-in-out infinite;
+}
+.hero-orb2 {
+  position: absolute;
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--glow2) 0%, transparent 70%);
+  bottom: 100px; left: 200px;
+  animation: pulse 6s ease-in-out infinite 2s;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.1); opacity: 1; }
+}
+
+.hero-eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: var(--accent);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.2s forwards;
+}
+
+.hero-name {
+  font-size: clamp(52px, 8vw, 110px);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -3px;
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.4s forwards;
+}
+
+.hero-name .accent { color: var(--accent); }
+.hero-name .line2 { display: block; color: var(--text2); font-size: 0.65em; }
+
+.hero-tagline {
+  max-width: 600px;
+  font-size: 18px;
+  color: var(--text2);
+  line-height: 1.6;
+  margin-bottom: 48px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.6s forwards;
+}
+
+.hero-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 48px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.8s forwards;
+}
+
+.tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  padding: 6px 14px;
+  border-radius: 2px;
+  border: 1px solid;
+  text-transform: uppercase;
+}
+.tag-cyber { border-color: var(--accent); color: var(--accent); background: rgba(0,212,255,0.05); }
+.tag-ai { border-color: var(--accent2); color: var(--accent2); background: rgba(0,255,136,0.05); }
+.tag-dev { border-color: var(--accent4); color: var(--accent4); background: rgba(245,158,11,0.05); }
+
+.hero-cta {
+  display: flex;
+  gap: 16px;
+  opacity: 0;
+  animation: fadeUp 0.8s 1s forwards;
+}
+
+.btn-primary {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--bg);
+  background: var(--accent);
+  border: none;
+  padding: 14px 28px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  display: inline-block;
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+}
+.btn-primary:hover {
+  background: var(--text);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px var(--glow);
+}
+
+.btn-outline {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text2);
+  background: transparent;
+  border: 1px solid var(--border);
+  padding: 14px 28px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  display: inline-block;
+}
+.btn-outline:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--glow);
+}
+
+.hero-status {
+  position: absolute;
+  bottom: 40px; right: 80px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--text3);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  animation: fadeUp 0.8s 1.2s forwards;
+}
+.status-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--accent2);
+  animation: blink 2s infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+/* SCROLL INDICATOR */
+.scroll-hint {
+  position: absolute;
+  bottom: 40px; left: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  animation: fadeUp 0.8s 1.4s forwards;
+}
+.scroll-line {
+  width: 1px; height: 60px;
+  background: linear-gradient(to bottom, var(--accent), transparent);
+  animation: scrollAnim 2s infinite;
+}
+@keyframes scrollAnim {
+  0% { transform: scaleY(0); transform-origin: top; }
+  50% { transform: scaleY(1); transform-origin: top; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* SECTIONS */
+section {
+  padding: 100px 80px;
+  position: relative;
+}
+
+.section-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-label::before {
+  content: '';
+  width: 30px; height: 1px;
+  background: var(--accent);
+}
+
+.section-title {
+  font-size: clamp(32px, 5vw, 56px);
+  font-weight: 800;
+  letter-spacing: -2px;
+  line-height: 1.05;
+  margin-bottom: 64px;
+}
+
+/* ABOUT */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.about-text p {
+  font-size: 17px;
+  line-height: 1.8;
+  color: var(--text2);
+  margin-bottom: 20px;
+}
+
+.about-text p strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.highlight-box {
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  padding: 20px 24px;
+  background: var(--surface);
+  margin-top: 32px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.6;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.stat-card {
+  border: 1px solid var(--border);
+  padding: 24px;
+  background: var(--surface);
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.stat-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--glow);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.stat-card:hover { border-color: var(--accent); }
+.stat-card:hover::before { opacity: 1; }
+
+.stat-num {
+  font-size: 40px;
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.stat-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--text3);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* SKILLS */
+.skills-section { background: var(--bg2); }
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.skill-card {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  padding: 32px;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.skill-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px var(--glow);
+}
+.skill-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(to right, var(--accent), transparent);
+  transform: scaleX(0);
+  transition: transform 0.3s;
+}
+.skill-card:hover::after { transform: scaleX(1); }
+
+.skill-icon {
+  font-size: 32px;
+  margin-bottom: 16px;
+}
+.skill-card h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+.skill-card p {
+  font-size: 13px;
+  color: var(--text3);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.stag {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  padding: 3px 8px;
+  border: 1px solid var(--border);
+  color: var(--text3);
+  letter-spacing: 1px;
+}
+
+/* PROJECTS */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.project-card {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  padding: 36px;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+.project-card.featured {
+  grid-column: span 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+.project-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 20px 60px var(--glow);
+}
+
+.project-badge {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 2px;
+  margin-bottom: 16px;
+  display: inline-block;
+}
+.badge-startup { background: rgba(255,77,109,0.15); color: var(--accent3); border: 1px solid var(--accent3); }
+.badge-pfe { background: rgba(0,212,255,0.1); color: var(--accent); border: 1px solid var(--accent); }
+.badge-research { background: rgba(0,255,136,0.1); color: var(--accent2); border: 1px solid var(--accent2); }
+.badge-web { background: rgba(245,158,11,0.1); color: var(--accent4); border: 1px solid var(--accent4); }
+.badge-ml { background: rgba(139,100,204,0.15); color: #b57af0; border: 1px solid #b57af0; }
+
+.project-card h3 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+.project-card p {
+  font-size: 14px;
+  color: var(--text3);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.project-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.tech-pill {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  padding: 4px 10px;
+  background: var(--bg3);
+  color: var(--text3);
+  border: 1px solid var(--border);
+}
+
+.project-link {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: gap 0.2s;
+}
+.project-link:hover { gap: 14px; }
+
+.project-visual {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  aspect-ratio: 16/9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  color: var(--text3);
+  letter-spacing: 2px;
+  position: relative;
+  overflow: hidden;
+}
+.project-visual::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    var(--border) 10px,
+    var(--border) 11px
+  );
+  opacity: 0.3;
+}
+
+/* TERMINAL WIDGET */
+.terminal {
+  background: #040d14;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+}
+.terminal-header {
+  background: var(--surface2);
+  padding: 10px 16px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+}
+.dot { width: 10px; height: 10px; border-radius: 50%; }
+.dot-r { background: #ff5f56; }
+.dot-y { background: #ffbd2e; }
+.dot-g { background: #27c93f; }
+.terminal-body { padding: 20px; line-height: 1.8; }
+.t-cmd { color: var(--accent); }
+.t-path { color: var(--accent2); }
+.t-out { color: var(--text3); }
+.t-val { color: var(--accent4); }
+.t-cursor { display: inline-block; width: 8px; height: 14px; background: var(--accent); animation: blink 1s infinite; vertical-align: middle; }
+
+/* TIMELINE / EXPERIENCE */
+.timeline {
+  position: relative;
+  padding-left: 40px;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 8px; bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--accent), transparent);
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 48px;
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: all 0.5s;
+}
+.timeline-item.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -45px; top: 6px;
+  width: 11px; height: 11px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px var(--glow), 0 0 12px var(--accent);
+}
+
+.timeline-date {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.timeline-role {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.timeline-org {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+.timeline-desc {
+  font-size: 14px;
+  color: var(--text2);
+  line-height: 1.7;
+  max-width: 600px;
+}
+
+/* EDUCATION */
+.edu-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 48px;
+}
+.edu-card {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  padding: 28px;
+  transition: all 0.3s;
+}
+.edu-card:hover { border-color: var(--accent2); }
+.edu-year {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  color: var(--accent2);
+  margin-bottom: 8px;
+}
+.edu-degree {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.edu-school {
+  font-size: 13px;
+  color: var(--text3);
+}
+
+/* CERTS */
+.certs-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+.cert-card {
+  border: 1px solid var(--border);
+  padding: 16px;
+  background: var(--surface);
+  text-align: center;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--text3);
+  line-height: 1.5;
+  transition: all 0.2s;
+}
+.cert-card:hover { border-color: var(--accent4); color: var(--accent4); }
+.cert-icon { font-size: 24px; display: block; margin-bottom: 8px; }
+
+/* CONTACT */
+.contact-section { background: var(--bg2); }
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.contact-info p {
+  font-size: 17px;
+  color: var(--text2);
+  line-height: 1.8;
+  margin-bottom: 32px;
+}
+
+.contact-items {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  color: var(--text2);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.contact-item:hover { color: var(--accent); }
+.contact-item-icon {
+  width: 36px; height: 36px;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+.contact-item:hover .contact-item-icon {
+  border-color: var(--accent);
+  background: var(--glow);
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 14px 16px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s;
+  resize: vertical;
+}
+.form-group input:focus,
+.form-group textarea:focus { border-color: var(--accent); }
+.form-group input::placeholder,
+.form-group textarea::placeholder { color: var(--text3); }
+
+/* FOOTER */
+footer {
+  padding: 40px 80px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--text3);
+}
+
+/* LANGUAGE TOGGLE */
+[data-lang="fr"] .en,
+[data-lang="en"] .fr { display: none; }
+[data-lang="fr"] .fr,
+[data-lang="en"] .en { display: revert; }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  nav { padding: 16px 24px; }
+  .nav-links { display: none; }
+  section { padding: 80px 24px; }
+  .hero { padding: 120px 24px 80px; }
+  .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+  .skills-grid { grid-template-columns: 1fr; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .project-card.featured { grid-column: span 1; grid-template-columns: 1fr; }
+  .certs-grid { grid-template-columns: repeat(2, 1fr); }
+  .edu-grid { grid-template-columns: 1fr; }
+  footer { flex-direction: column; gap: 16px; text-align: center; }
+  .hero-status, .scroll-hint { display: none; }
+}
+
+/* INTERSECTION OBSERVER ANIMATIONS */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* GLITCH EFFECT */
+@keyframes glitch {
+  0% { clip-path: inset(0 0 95% 0); transform: skewX(0); }
+  5% { clip-path: inset(85% 0 0 0); transform: skewX(-5deg); }
+  10% { clip-path: inset(30% 0 50% 0); transform: skewX(3deg); }
+  15%, 100% { clip-path: inset(0 0 0 0); transform: skewX(0); }
+}
+.hero-name:hover .accent {
+  animation: glitch 0.4s steps(1) forwards;
+}
+
+/* SOUK-DZ special styling */
+.soukdz-card {
+  background: linear-gradient(135deg, var(--surface) 0%, rgba(255,77,109,0.05) 100%);
+}
+</style>
+</head>
+<body>
+
+<!-- CURSORS -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">SK<span>.portfolio</span></div>
+  <ul class="nav-links">
+    <li><a href="#about"><span class="en">About</span><span class="fr">À propos</span></a></li>
+    <li><a href="#skills"><span class="en">Skills</span><span class="fr">Compétences</span></a></li>
+    <li><a href="#projects"><span class="en">Projects</span><span class="fr">Projets</span></a></li>
+    <li><a href="#experience"><span class="en">Experience</span><span class="fr">Expérience</span></a></li>
+    <li><a href="#education"><span class="en">Education</span><span class="fr">Formation</span></a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-controls">
+    <button class="ctrl-btn" onclick="toggleLang()" id="langBtn">FR</button>
+    <button class="ctrl-btn" onclick="toggleTheme()" id="themeBtn">☀</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-grid"></div>
+  <div class="hero-orb"></div>
+  <div class="hero-orb2"></div>
+
+  <div class="hero-eyebrow en">// Cybersecurity Engineer & AI Developer</div>
+  <div class="hero-eyebrow fr">// Ingénieure Cybersécurité & Développeuse IA</div>
+
+  <h1 class="hero-name">
+    <span class="accent">Selssabila</span>
+    <span class="line2">Kiouaz</span>
+  </h1>
+
+  <p class="hero-tagline en">
+    Master's student in Cybersecurity at USMB — building intelligent systems that defend, detect, and disrupt threats. Specializing in IDS/ML, cryptography, and full-stack security engineering.
+  </p>
+  <p class="hero-tagline fr">
+    Étudiante en Master Cybersécurité à l'USMB — je construis des systèmes intelligents qui défendent, détectent et contrecarrent les menaces. Spécialisée en IDS/ML, cryptographie et ingénierie sécurité full-stack.
+  </p>
+
+  <div class="hero-tags">
+    <span class="tag tag-cyber">Cybersecurity</span>
+    <span class="tag tag-ai">Machine Learning</span>
+    <span class="tag tag-dev">Full-Stack Dev</span>
+    <span class="tag tag-cyber">Pentesting</span>
+    <span class="tag tag-ai">IDS / NIDS</span>
+    <span class="tag tag-dev">Next.js / Django</span>
+  </div>
+
+  <div class="hero-cta">
+    <a href="#projects" class="btn-primary en">View Projects →</a>
+    <a href="#projects" class="btn-primary fr" style="display:none">Voir les Projets →</a>
+    <a href="#contact" class="btn-outline en">Get in Touch</a>
+    <a href="#contact" class="btn-outline fr" style="display:none">Me Contacter</a>
+  </div>
+
+  <div class="hero-status">
+    <div class="status-dot"></div>
+    <span class="en">Available for alternance 2026–2027</span>
+    <span class="fr">Disponible pour alternance 2026–2027</span>
+  </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label en">01 — About</div>
+  <div class="section-label fr" style="display:none">01 — À propos</div>
+  <h2 class="section-title reveal en">Who I Am</h2>
+  <h2 class="section-title reveal fr" style="display:none">Qui suis-je</h2>
+
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p class="en"><strong>Selssabila Kiouaz</strong> is a cybersecurity engineer and full-stack developer from Algeria, currently pursuing an L3 in Mathematics-Computer Science at <strong>Université Savoie Mont Blanc</strong> (Chambéry, France), with a Master's in Cybersecurity Engineering from <strong>ESTIN Bejaia</strong>.</p>
+      <p class="fr" style="display:none"><strong>Selssabila Kiouaz</strong> est ingénieure en cybersécurité et développeuse full-stack algérienne, actuellement en L3 Mathématiques-Informatique à l'<strong>Université Savoie Mont Blanc</strong> (Chambéry), titulaire d'un Master 1 Cybersécurité de l'<strong>ESTIN Bejaia</strong>.</p>
+
+      <p class="en">At the intersection of security and AI, my work focuses on <strong>intrusion detection systems</strong>, <strong>machine learning for cybersecurity</strong>, and <strong>post-quantum cryptography</strong>. I build things that matter — from marketplace security layers to drone network anomaly detection.</p>
+      <p class="fr" style="display:none">À l'intersection de la sécurité et de l'IA, mes travaux portent sur les <strong>systèmes de détection d'intrusion</strong>, le <strong>machine learning en cybersécurité</strong> et la <strong>cryptographie post-quantique</strong>. Je crée des choses qui ont de l'impact — des couches de sécurité pour marketplace aux systèmes de détection d'anomalies dans les réseaux de drones.</p>
+
+      <p class="en">I'm also the co-founder of <strong>SOUK-DZ</strong>, a secure second-hand marketplace startup for Algeria, built with Next.js, Java Spring Boot, and an AI-powered security layer.</p>
+      <p class="fr" style="display:none">Je suis également co-fondatrice de <strong>SOUK-DZ</strong>, une startup algérienne de marketplace de seconde main sécurisée, construite avec Next.js, Java Spring Boot et une couche de sécurité basée sur l'IA.</p>
+
+      <div class="highlight-box">
+        <span class="t-path">~/selssabila</span> <span class="t-cmd">$</span> status<br>
+        → <span class="t-val en">Seeking alternance 2026–2027 · Cybersecurity / AI / Software Engineering</span>
+        <span class="t-val fr" style="display:none">Recherche alternance 2026–2027 · Cybersécurité / IA / Génie logiciel</span>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-num">3+</div>
+          <div class="stat-label en">Years Experience</div>
+          <div class="stat-label fr" style="display:none">Ans d'Expérience</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">10+</div>
+          <div class="stat-label en">Projects Built</div>
+          <div class="stat-label fr" style="display:none">Projets Réalisés</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">4</div>
+          <div class="stat-label en">Certifications</div>
+          <div class="stat-label fr" style="display:none">Certifications</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">C2</div>
+          <div class="stat-label en">English Level</div>
+          <div class="stat-label fr" style="display:none">Niveau Anglais</div>
+        </div>
+      </div>
+
+      <div style="margin-top: 24px;">
+        <div class="terminal">
+          <div class="terminal-header">
+            <div class="dot dot-r"></div>
+            <div class="dot dot-y"></div>
+            <div class="dot dot-g"></div>
+            <span style="color:var(--text3);font-size:11px;margin-left:8px">selssabila@portfolio ~ </span>
+          </div>
+          <div class="terminal-body">
+            <div><span class="t-path">→</span> <span class="t-cmd">languages</span></div>
+            <div class="t-out">&nbsp; Arabic (Native) | French (Fluent) | English (C2)</div>
+            <div style="margin-top:8px"><span class="t-path">→</span> <span class="t-cmd">location</span></div>
+            <div class="t-out">&nbsp; Chambéry, France 🇫🇷 / Algeria 🇩🇿</div>
+            <div style="margin-top:8px"><span class="t-path">→</span> <span class="t-cmd">github</span></div>
+            <div class="t-out">&nbsp; <a href="https://github.com/2208se" style="color:var(--accent);text-decoration:none">github.com/2208se</a></div>
+            <div style="margin-top:8px"><span class="t-path">→</span> <span class="t-cmd">status</span></div>
+            <div><span class="t-out">&nbsp; </span><span class="t-val">● open to opportunities</span> <span class="t-cursor"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="skills-section">
+  <div class="section-label en">02 — Expertise</div>
+  <div class="section-label fr" style="display:none">02 — Expertise</div>
+  <h2 class="section-title reveal en">Skills & Stack</h2>
+  <h2 class="section-title reveal fr" style="display:none">Compétences & Stack</h2>
+
+  <div class="skills-grid">
+    <div class="skill-card reveal">
+      <div class="skill-icon">🛡️</div>
+      <h3 class="en">Cybersecurity</h3>
+      <h3 class="fr" style="display:none">Cybersécurité</h3>
+      <p class="en">Offensive and defensive security: pentesting, network scanning, vulnerability management, malware analysis, intrusion detection.</p>
+      <p class="fr" style="display:none">Sécurité offensive et défensive : pentesting, scan réseau, gestion des vulnérabilités, analyse malware, détection d'intrusion.</p>
+      <div class="skill-tags">
+        <span class="stag">Pentesting</span>
+        <span class="stag">Scapy</span>
+        <span class="stag">Hydra</span>
+        <span class="stag">Nikto</span>
+        <span class="stag">Wireshark</span>
+        <span class="stag">OWASP</span>
+        <span class="stag">MITRE ATT&CK</span>
+      </div>
+    </div>
+
+    <div class="skill-card reveal">
+      <div class="skill-icon">🤖</div>
+      <h3 class="en">AI / Machine Learning</h3>
+      <h3 class="fr" style="display:none">IA / Machine Learning</h3>
+      <p class="en">ML for security: anomaly detection, classification, SMOTE, Random Forest, SVM, KNN, Decision Trees, SHAP explainability.</p>
+      <p class="fr" style="display:none">ML pour la sécurité : détection d'anomalies, classification, SMOTE, Random Forest, SVM, KNN, arbres de décision, explicabilité SHAP.</p>
+      <div class="skill-tags">
+        <span class="stag">scikit-learn</span>
+        <span class="stag">Python</span>
+        <span class="stag">Streamlit</span>
+        <span class="stag">SMOTE</span>
+        <span class="stag">Neo4j</span>
+        <span class="stag">SHAP</span>
+      </div>
+    </div>
+
+    <div class="skill-card reveal">
+      <div class="skill-icon">🌐</div>
+      <h3 class="en">Full-Stack Development</h3>
+      <h3 class="fr" style="display:none">Développement Full-Stack</h3>
+      <p class="en">Building secure, scalable web applications from database to deployment. Frontend specialist with security-first mindset.</p>
+      <p class="fr" style="display:none">Construction d'applications web sécurisées et scalables, de la base de données au déploiement. Spécialiste frontend avec une approche security-first.</p>
+      <div class="skill-tags">
+        <span class="stag">Next.js</span>
+        <span class="stag">React/TypeScript</span>
+        <span class="stag">Node.js</span>
+        <span class="stag">Django</span>
+        <span class="stag">Spring Boot</span>
+        <span class="stag">PostgreSQL</span>
+      </div>
+    </div>
+
+    <div class="skill-card reveal">
+      <div class="skill-icon">🔐</div>
+      <h3 class="en">Cryptography</h3>
+      <h3 class="fr" style="display:none">Cryptographie</h3>
+      <p class="en">Classical and post-quantum cryptography: RSA, elliptic curves, LWE, lattice-based schemes, Bitcoin ECDSA, formal methods for security.</p>
+      <p class="fr" style="display:none">Cryptographie classique et post-quantique : RSA, courbes elliptiques, LWE, schémas basés sur les réseaux, ECDSA Bitcoin, méthodes formelles.</p>
+      <div class="skill-tags">
+        <span class="stag">Post-Quantum</span>
+        <span class="stag">LWE</span>
+        <span class="stag">ECDSA</span>
+        <span class="stag">secp256k1</span>
+        <span class="stag">Formal Methods</span>
+      </div>
+    </div>
+
+    <div class="skill-card reveal">
+      <div class="skill-icon">🖧</div>
+      <h3 class="en">Network & Systems</h3>
+      <h3 class="fr" style="display:none">Réseaux & Systèmes</h3>
+      <p class="en">Enterprise network administration, Active Directory, Windows Server, Linux, Docker, vulnerability scanning and automated patch management.</p>
+      <p class="fr" style="display:none">Administration réseau d'entreprise, Active Directory, Windows Server, Linux, Docker, scan de vulnérabilités et gestion automatisée des correctifs.</p>
+      <div class="skill-tags">
+        <span class="stag">TCP/IP</span>
+        <span class="stag">VLANs</span>
+        <span class="stag">Active Directory</span>
+        <span class="stag">Docker</span>
+        <span class="stag">Cisco</span>
+        <span class="stag">ManageEngine</span>
+      </div>
+    </div>
+
+    <div class="skill-card reveal">
+      <div class="skill-icon">📊</div>
+      <h3 class="en">Data Science & Graphs</h3>
+      <h3 class="fr" style="display:none">Data Science & Graphes</h3>
+      <p class="en">Graph databases, recommendation systems, network analysis with PageRank, betweenness centrality, collaborative filtering.</p>
+      <p class="fr" style="display:none">Bases de données graphes, systèmes de recommandation, analyse de réseaux avec PageRank, centralité, filtrage collaboratif.</p>
+      <div class="skill-tags">
+        <span class="stag">Neo4j</span>
+        <span class="stag">PageRank</span>
+        <span class="stag">MovieLens</span>
+        <span class="stag">Wikipedia API</span>
+        <span class="stag">Data Analysis</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label en">03 — Work</div>
+  <div class="section-label fr" style="display:none">03 — Projets</div>
+  <h2 class="section-title reveal en">Selected Projects</h2>
+  <h2 class="section-title reveal fr" style="display:none">Projets Sélectionnés</h2>
+
+  <div class="projects-grid">
+    <!-- SOUK-DZ FEATURED -->
+    <div class="project-card featured soukdz-card reveal">
+      <div>
+        <div class="project-badge badge-startup">🚀 Startup</div>
+        <h3>SOUK-DZ</h3>
+        <p class="en">A secure, scalable marketplace for buying and selling second-hand fashion in Algeria. Built with a 3-layer AI-powered IDS (NIDS + SIEM + Correlator) that detects brute force, scraping, credential stuffing and fake accounts in real time — aligned with OWASP Top 10 and MITRE ATT&CK.</p>
+        <p class="fr" style="display:none">Marketplace sécurisée et scalable pour l'achat/vente de mode de seconde main en Algérie. Construite avec un IDS à 3 couches basé sur l'IA (NIDS + SIEM + Corrélateur) qui détecte le brute force, le scraping, le credential stuffing et les faux comptes en temps réel — aligné sur OWASP Top 10 et MITRE ATT&CK.</p>
+        <div class="project-tech">
+          <span class="tech-pill">Next.js</span>
+          <span class="tech-pill">Spring Boot</span>
+          <span class="tech-pill">Python IDS</span>
+          <span class="tech-pill">Scapy</span>
+          <span class="tech-pill">scikit-learn</span>
+          <span class="tech-pill">Streamlit</span>
+          <span class="tech-pill">CICIDS2017</span>
+        </div>
+        <a href="https://github.com/2208se/SOUK-DZ" target="_blank" class="project-link">GitHub →</a>
+      </div>
+      <div>
+        <div class="project-visual" style="margin-bottom:16px; background: linear-gradient(135deg,rgba(255,77,109,0.1),rgba(0,212,255,0.05));">
+          <span style="position:relative;z-index:1;font-size:13px;color:var(--accent)">SOUK&nbsp;DZ</span>
+        </div>
+        <div class="terminal" style="font-size:11px;">
+          <div class="terminal-header">
+            <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+            <span style="color:var(--text3);font-size:10px;margin-left:8px">ids_engine/alert_manager</span>
+          </div>
+          <div class="terminal-body" style="font-size:11px;line-height:1.7;">
+            <div><span class="t-cmd">[ALERT]</span> <span class="t-val">S1</span> <span class="t-out">Brute-force detected</span></div>
+            <div><span class="t-out">→ 192.168.1.105: 1000 req | /login</span></div>
+            <div><span class="t-cmd">[ALERT]</span> <span class="t-val">S3</span> <span class="t-out">Recon scan — Nikto</span></div>
+            <div><span class="t-out">→ Risk: HIGH | Layer 1+2 corr.</span></div>
+            <div><span class="t-cmd">[INFO]</span> <span class="t-out">RF F1: 0.97 | AUC: 0.98</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- IDS DRONES -->
+    <div class="project-card reveal">
+      <div class="project-badge badge-pfe">🎓 Master PFE</div>
+      <h3 class="en">IDS for Drone Networks</h3>
+      <h3 class="fr" style="display:none">IDS pour Réseaux de Drones</h3>
+      <p class="en">Intrusion detection in autonomous drone networks using machine learning. Anomaly detection on network traffic from swarm communications.</p>
+      <p class="fr" style="display:none">Détection d'intrusion dans les réseaux de drones autonomes par apprentissage automatique. Détection d'anomalies sur le trafic réseau des communications de nuées.</p>
+      <div class="project-tech">
+        <span class="tech-pill">Python</span>
+        <span class="tech-pill">scikit-learn</span>
+        <span class="tech-pill">Random Forest</span>
+        <span class="tech-pill">Network Analysis</span>
+      </div>
+      <a href="https://github.com/2208se" target="_blank" class="project-link en">In Progress →</a>
+      <a href="https://github.com/2208se" target="_blank" class="project-link fr" style="display:none">En Cours →</a>
+    </div>
+
+    <!-- POST-QUANTUM CRYPTO -->
+    <div class="project-card reveal">
+      <div class="project-badge badge-research">🔬 Research</div>
+      <h3 class="en">Post-Quantum Cryptography</h3>
+      <h3 class="fr" style="display:none">Cryptographie Post-Quantique</h3>
+      <p class="en">Research on lattice-based cryptographic schemes resistant to quantum attacks. Studies RSA/ECC vulnerabilities against Shor's algorithm, LWE problem, SVP/CVP.</p>
+      <p class="fr" style="display:none">Recherche sur les schémas cryptographiques basés sur les réseaux résistants aux attaques quantiques. Vulnérabilités RSA/ECC face à l'algorithme de Shor, problème LWE, SVP/CVP.</p>
+      <div class="project-tech">
+        <span class="tech-pill">LWE</span>
+        <span class="tech-pill">Lattice Crypto</span>
+        <span class="tech-pill">Shor's Algo</span>
+        <span class="tech-pill">Python</span>
+      </div>
+      <a href="https://github.com/2208se" target="_blank" class="project-link en">In Progress →</a>
+      <a href="https://github.com/2208se" target="_blank" class="project-link fr" style="display:none">En Cours →</a>
+    </div>
+
+    <!-- WIKIPEDIA GAME -->
+    <div class="project-card reveal">
+      <div class="project-badge badge-research">📊 Data Science</div>
+      <h3>WikiGame with Neo4j</h3>
+      <p class="en">Advanced graph analysis of Wikipedia algorithm pages using Neo4j. Implements PageRank, betweenness centrality, shortest path algorithms. Find any connection between two Wikipedia articles.</p>
+      <p class="fr" style="display:none">Analyse avancée du graphe des pages Wikipédia sur l'algorithmique via Neo4j. Implémente PageRank, centralité de médiation, algorithmes de plus court chemin.</p>
+      <div class="project-tech">
+        <span class="tech-pill">Neo4j</span>
+        <span class="tech-pill">Node.js</span>
+        <span class="tech-pill">Express.js</span>
+        <span class="tech-pill">PageRank</span>
+      </div>
+      <a href="https://github.com/2208se/WikiGame-with-Neo4j" target="_blank" class="project-link">GitHub →</a>
+    </div>
+
+    <!-- MOVIE RECO -->
+    <div class="project-card reveal">
+      <div class="project-badge badge-ml">🎬 ML</div>
+      <h3 class="en">Movie Recommendation System</h3>
+      <h3 class="fr" style="display:none">Système de Recommandation Films</h3>
+      <p class="en">Graph-based movie recommendation using Neo4j + MovieLens dataset. Compares collaborative filtering, content-based, and similarity analysis algorithms.</p>
+      <p class="fr" style="display:none">Recommandation de films par graphes avec Neo4j et MovieLens. Compare filtrage collaboratif, basé sur le contenu et analyse de similarité.</p>
+      <div class="project-tech">
+        <span class="tech-pill">Neo4j</span>
+        <span class="tech-pill">MovieLens</span>
+        <span class="tech-pill">Collaborative Filtering</span>
+      </div>
+      <a href="https://github.com/2208se/Movie-recommendation-system" target="_blank" class="project-link">GitHub →</a>
+    </div>
+
+    <!-- BITCOIN CRYPTO -->
+    <div class="project-card reveal">
+      <div class="project-badge badge-research">₿ Crypto</div>
+      <h3 class="en">Bitcoin Cryptography Engine</h3>
+      <h3 class="fr" style="display:none">Moteur Cryptographique Bitcoin</h3>
+      <p class="en">Python implementation of Bitcoin transaction cryptography: secp256k1 key generation, address creation, ECDSA digital signatures, transaction verification.</p>
+      <p class="fr" style="display:none">Implémentation Python de la cryptographie des transactions Bitcoin : génération de clés secp256k1, création d'adresses, signatures ECDSA, vérification de transactions.</p>
+      <div class="project-tech">
+        <span class="tech-pill">Python</span>
+        <span class="tech-pill">secp256k1</span>
+        <span class="tech-pill">ECDSA</span>
+        <span class="tech-pill">Blockchain</span>
+      </div>
+      <a href="https://github.com/2208se/Bitcoin-Transaction-" target="_blank" class="project-link">GitHub →</a>
+    </div>
+
+    <!-- SCANSECURE -->
+    <div class="project-card reveal">
+      <div class="project-badge badge-web">🔍 Security Web</div>
+      <h3>ScanSecure</h3>
+      <p class="en">Online security analysis platform and cybersecurity awareness site. Allows users to scan and assess web security posture with educational resources.</p>
+      <p class="fr" style="display:none">Plateforme d'analyse de sécurité en ligne et site de sensibilisation à la cybersécurité. Permet aux utilisateurs d'évaluer la posture de sécurité avec des ressources éducatives.</p>
+      <div class="project-tech">
+        <span class="tech-pill">Web Security</span>
+        <span class="tech-pill">ML</span>
+        <span class="tech-pill">Python</span>
+      </div>
+      <a href="https://github.com/2208se" target="_blank" class="project-link">GitHub →</a>
+    </div>
+
+    <!-- AUTOMATED VULN MGMT -->
+    <div class="project-card reveal">
+      <div class="project-badge badge-pfe">🎓 Ingénieur PFE</div>
+      <h3 class="en">Automated Vulnerability Management</h3>
+      <h3 class="fr" style="display:none">Gestion Automatisée des Vulnérabilités</h3>
+      <p class="en">Proactive security system on Windows Server 2022 & RedHat using ManageEngine Vulnerability Manager Plus — automated scanning, patching, compliance monitoring.</p>
+      <p class="fr" style="display:none">Système de sécurité proactive sur Windows Server 2022 & RedHat via ManageEngine — scan automatique, correction des vulnérabilités, suivi de conformité.</p>
+      <div class="project-tech">
+        <span class="tech-pill">Windows Server</span>
+        <span class="tech-pill">RedHat</span>
+        <span class="tech-pill">ManageEngine</span>
+        <span class="tech-pill">AD GPO</span>
+      </div>
+      <a href="https://github.com/2208se" target="_blank" class="project-link">GitHub →</a>
+    </div>
+
+    <!-- EGOR GAMING -->
+    <div class="project-card reveal">
+      <div class="project-badge badge-web">🎮 Freelance</div>
+      <h3>EGOR Gaming</h3>
+      <p class="en">Frontend developer & UI/UX designer at EGOR Gaming — production platform for esports tournaments. SSR, SSG, ISR, API integration, performance optimization.</p>
+      <p class="fr" style="display:none">Développeuse Frontend & UI/UX chez EGOR Gaming — plateforme de production pour tournois esport. SSR, SSG, ISR, intégration API, optimisation des performances.</p>
+      <div class="project-tech">
+        <span class="tech-pill">Next.js</span>
+        <span class="tech-pill">TypeScript</span>
+        <span class="tech-pill">SSR/SSG</span>
+        <span class="tech-pill">UI/UX</span>
+      </div>
+      <a href="https://www.egorgaming.com" target="_blank" class="project-link">Live Site →</a>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" style="background:var(--bg2)">
+  <div class="section-label en">04 — Experience</div>
+  <div class="section-label fr" style="display:none">04 — Expérience</div>
+  <h2 class="section-title reveal en">Work History</h2>
+  <h2 class="section-title reveal fr" style="display:none">Parcours Professionnel</h2>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start">
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">Sep. 2025 – Present</div>
+        <div class="timeline-role en">Frontend Developer & Pentester</div>
+        <div class="timeline-role fr" style="display:none">Développeuse Frontend & Pentesteur</div>
+        <div class="timeline-org">Egor Gaming · Freelance</div>
+        <div class="timeline-desc en">Building and improving the official esports platform. Next.js, TypeScript, UI/UX design, API integration + security testing of the platform.</div>
+        <div class="timeline-desc fr" style="display:none">Développement et amélioration de la plateforme esport officielle. Next.js, TypeScript, design UI/UX, intégration API + tests de sécurité.</div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">Mar – Apr 2025</div>
+        <div class="timeline-role en">Network Admin & Vuln. Management Intern</div>
+        <div class="timeline-role fr" style="display:none">Stagiaire Administration Réseau & Gestion des Vulnérabilités</div>
+        <div class="timeline-org en">Service informatique · Siège Wilaya de Mila</div>
+        <div class="timeline-org fr" style="display:none">Service informatique · Siège Wilaya de Mila</div>
+        <div class="timeline-desc en">Enterprise network administration, automated vulnerability management with ManageEngine, Windows Server security hardening.</div>
+        <div class="timeline-desc fr" style="display:none">Administration réseau d'entreprise, gestion automatisée des vulnérabilités avec ManageEngine, durcissement de sécurité Windows Server.</div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">Dec 2024 – Jan 2025</div>
+        <div class="timeline-role en">Network Analyst & Cybersecurity Intern</div>
+        <div class="timeline-role fr" style="display:none">Stagiaire Analyste Réseau et Cybersécurité</div>
+        <div class="timeline-org en">Enasel SPA · Constantine</div>
+        <div class="timeline-org fr" style="display:none">Enasel SPA · Constantine</div>
+        <div class="timeline-desc en">Windows Server configuration, Active Directory domain setup (GPOs, groups, permissions), footprinting and penetration testing.</div>
+        <div class="timeline-desc fr" style="display:none">Configuration Windows Server, mise en place de domaines Active Directory (GPO, groupes, permissions), footprinting et tests de pénétration.</div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">Mar – Apr 2024</div>
+        <div class="timeline-role en">Networking Intern</div>
+        <div class="timeline-role fr" style="display:none">Stagiaire Réseautique</div>
+        <div class="timeline-org en">Département Actel & Centre de Transmission CT1 · Mila</div>
+        <div class="timeline-org fr" style="display:none">Département Actel & Centre de Transmission CT1 · Mila</div>
+        <div class="timeline-desc en">Immersion in professional networking and transmission systems. Applied theoretical knowledge to real network infrastructure.</div>
+        <div class="timeline-desc fr" style="display:none">Immersion dans les réseaux informatiques et les systèmes de transmission. Application des connaissances théoriques à une infrastructure réelle.</div>
+      </div>
+    </div>
+
+    <div>
+      <h3 style="font-size:20px;font-weight:700;margin-bottom:28px;color:var(--text2)" class="reveal en">Recommendations</h3>
+      <h3 style="font-size:20px;font-weight:700;margin-bottom:28px;color:var(--text2)" class="reveal fr" style="display:none">Lettres de Recommandation</h3>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div class="reveal" style="border:1px solid var(--border);padding:20px;background:var(--surface);">
+          <div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--accent);margin-bottom:6px">USMB · 2026</div>
+          <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px">Maria Kazakova</div>
+          <div style="font-size:12px;color:var(--text3);margin-bottom:8px">MCF Responsable Math-Info · LAMA USMB</div>
+          <div style="font-size:13px;color:var(--text2);line-height:1.6" class="en">"Very encouraging results despite health-related absences. Strong analytical capacity, particularly in numerical analysis and AI-driven graph systems — very well-constructed output."</div>
+          <div style="font-size:13px;color:var(--text2);line-height:1.6" class="fr" style="display:none">"Des résultats très encourageants malgré des absences pour raisons de santé. Forte capacité analytique, notamment en analyse numérique et systèmes graphes IA — rendu très construit."</div>
+        </div>
+
+        <div class="reveal" style="border:1px solid var(--border);padding:20px;background:var(--surface);">
+          <div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--accent);margin-bottom:6px">USMB · 2026</div>
+          <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px">Pierre Hyvernat</div>
+          <div style="font-size:12px;color:var(--text3);margin-bottom:8px">MCF · LAMA, Université Savoie Mont Blanc</div>
+          <div style="font-size:13px;color:var(--text2);line-height:1.6" class="en">"Attentive, discreet and interested student. She is the one who defined her own subject around post-quantum cryptography — a rare initiative."</div>
+          <div style="font-size:13px;color:var(--text2);line-height:1.6" class="fr" style="display:none">"Étudiante attentive, discrète et intéressée. C'est elle qui a mis au point son sujet autour de la cryptographie post-quantique — une initiative rare."</div>
+        </div>
+
+        <div class="reveal" style="border:1px solid var(--border);padding:20px;background:var(--surface);">
+          <div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--accent2);margin-bottom:6px">ESTIN · 2024</div>
+          <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px">Somia Lekehali</div>
+          <div style="font-size:12px;color:var(--text3);margin-bottom:8px">MCF · ESTIN Bejaia — Databases & AI</div>
+          <div style="font-size:13px;color:var(--text2);line-height:1.6" class="en">"Exceptional student with remarkable understanding of AI algorithms and exceptional ability to apply them to concrete situations. Highly recommended."</div>
+          <div style="font-size:13px;color:var(--text2);line-height:1.6" class="fr" style="display:none">"Étudiante exceptionnelle dotée d'une compréhension remarquable des algorithmes d'IA et d'une capacité exceptionnelle à les adapter à des situations concrètes. Vivement recommandée."</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-label en">05 — Education</div>
+  <div class="section-label fr" style="display:none">05 — Formation</div>
+  <h2 class="section-title reveal en">Academic Path</h2>
+  <h2 class="section-title reveal fr" style="display:none">Parcours Académique</h2>
+
+  <div class="edu-grid reveal">
+    <div class="edu-card">
+      <div class="edu-year">2025 – 2026</div>
+      <div class="edu-degree en">L3 STS — Mathématiques-Informatique</div>
+      <div class="edu-degree fr" style="display:none">L3 STS — Mathématiques-Informatique</div>
+      <div class="edu-school">Université Savoie Mont Blanc · Chambéry, France 🇫🇷</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-year">2021 – 2025</div>
+      <div class="edu-degree en">Master 1 Cybersecurity · Diplôme Ingénieur d'État</div>
+      <div class="edu-degree fr" style="display:none">Master 1 Cybersécurité · Diplôme Ingénieur d'État</div>
+      <div class="edu-school">ESTIN Bejaia · Algeria 🇩🇿</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-year">2026 – 2027 (target)</div>
+      <div class="edu-degree en">Master — Cybersecurity</div>
+      <div class="edu-degree fr" style="display:none">Master — Cybersécurité</div>
+      <div class="edu-school en">France 🇫🇷 · Seeking alternance</div>
+      <div class="edu-school fr" style="display:none">France 🇫🇷 · Recherche alternance</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-year">2020</div>
+      <div class="edu-degree en">Baccalauréat — Mathematics</div>
+      <div class="edu-degree fr" style="display:none">Baccalauréat — Mathématiques</div>
+      <div class="edu-school">Lycée Didouche Mourad · Algeria 🇩🇿</div>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:60px;margin-bottom:24px">
+    <span class="en">Certifications & Language</span>
+    <span class="fr" style="display:none">Certifications & Langues</span>
+  </div>
+  <div class="certs-grid reveal">
+    <div class="cert-card">
+      <span class="cert-icon">🌐</span>
+      Cisco NetAcad<br><strong style="color:var(--text)">Network Basics</strong>
+    </div>
+    <div class="cert-card">
+      <span class="cert-icon">🛡️</span>
+      Cisco NetAcad<br><strong style="color:var(--text)">Network Defense</strong>
+    </div>
+    <div class="cert-card">
+      <span class="cert-icon">⚔️</span>
+      Coursera<br><strong style="color:var(--text)">Ethical Hacking</strong>
+    </div>
+    <div class="cert-card">
+      <span class="cert-icon">🐍</span>
+      365 Data Science<br><strong style="color:var(--text)">Python Bootcamp</strong>
+    </div>
+    <div class="cert-card">
+      <span class="cert-icon">🇬🇧</span>
+      EF SET<br><strong style="color:var(--text)">English C2 — 76/100</strong>
+    </div>
+    <div class="cert-card">
+      <span class="cert-icon">📝</span>
+      USMB Service des Langues<br><strong style="color:var(--text)">English → C1</strong>
+    </div>
+    <div class="cert-card">
+      <span class="cert-icon">🇫🇷</span>
+      French<br><strong style="color:var(--text)">Fluent · Daily</strong>
+    </div>
+    <div class="cert-card">
+      <span class="cert-icon">🇩🇿</span>
+      Arabic<br><strong style="color:var(--text)">Native Speaker</strong>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+  <div class="section-label en">06 — Contact</div>
+  <div class="section-label fr" style="display:none">06 — Contact</div>
+  <h2 class="section-title reveal en">Let's Work Together</h2>
+  <h2 class="section-title reveal fr" style="display:none">Travaillons Ensemble</h2>
+
+  <div class="contact-grid">
+    <div class="reveal">
+      <p class="en">Looking for an alternance in cybersecurity, AI, or software engineering for 2026–2027. Open to internships, research collaborations, and freelance projects.</p>
+      <p class="fr" style="display:none">À la recherche d'une alternance en cybersécurité, IA ou génie logiciel pour 2026–2027. Ouverte aux stages, collaborations de recherche et projets freelance.</p>
+      <div class="contact-items" style="margin-top:32px">
+        <a href="mailto:selssabilakz@gmail.com" class="contact-item">
+          <div class="contact-item-icon">✉</div>
+          selssabilakz@gmail.com
+        </a>
+        <a href="tel:+33759089737" class="contact-item">
+          <div class="contact-item-icon">☎</div>
+          +33 7 59 08 97 37
+        </a>
+        <a href="https://github.com/2208se" target="_blank" class="contact-item">
+          <div class="contact-item-icon">⌥</div>
+          github.com/2208se
+        </a>
+        <a href="https://www.linkedin.com/in/selssabila-kiouaz" target="_blank" class="contact-item">
+          <div class="contact-item-icon">in</div>
+          LinkedIn: Selssabila Kiouaz
+        </a>
+        <div class="contact-item" style="cursor:default">
+          <div class="contact-item-icon">📍</div>
+          Chambéry, France
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form reveal">
+      <div class="form-group">
+        <input type="text" placeholder="Name / Nom" />
+      </div>
+      <div class="form-group">
+        <input type="email" placeholder="Email" />
+      </div>
+      <div class="form-group">
+        <input type="text" placeholder="Subject / Objet" />
+      </div>
+      <div class="form-group">
+        <textarea rows="5" placeholder="Message..."></textarea>
+      </div>
+      <button class="btn-primary" onclick="handleContact()" style="width:100%;text-align:center">
+        <span class="en">Send Message →</span>
+        <span class="fr" style="display:none">Envoyer →</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <span style="color:var(--accent)">Selssabila Kiouaz</span>
+    <span style="margin:0 12px;color:var(--border)">·</span>
+    <span class="en">Cybersecurity & AI Engineer</span>
+    <span class="fr" style="display:none">Ingénieure Cybersécurité & IA</span>
+  </div>
+  <div style="display:flex;gap:24px;align-items:center">
+    <a href="https://github.com/2208se" target="_blank" style="color:var(--text3);text-decoration:none;transition:color 0.2s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text3)'">GitHub</a>
+    <a href="https://www.linkedin.com/in/selssabila-kiouaz" target="_blank" style="color:var(--text3);text-decoration:none;transition:color 0.2s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text3)'">LinkedIn</a>
+    <a href="https://github.com/2208se/SOUK-DZ" target="_blank" style="color:var(--text3);text-decoration:none;transition:color 0.2s" onmouseover="this.style.color='var(--accent3)'" onmouseout="this.style.color='var(--text3)'">SOUK-DZ</a>
+  </div>
+  <div>© 2026 · Built with ❤️</div>
+</footer>
+
+<script>
+// CURSOR
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursor.style.left=mx+'px'; cursor.style.top=my+'px'; });
+function animRing() { rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(animRing); }
+animRing();
+document.querySelectorAll('a,button,.project-card,.skill-card,.stat-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ cursor.style.width='20px'; cursor.style.height='20px'; ring.style.width='52px'; ring.style.height='52px'; });
+  el.addEventListener('mouseleave',()=>{ cursor.style.width='12px'; cursor.style.height='12px'; ring.style.width='36px'; ring.style.height='36px'; });
+});
+
+// THEME
+function toggleTheme() {
+  const html = document.documentElement;
+  const btn = document.getElementById('themeBtn');
+  if (html.dataset.theme==='dark') { html.dataset.theme='light'; btn.textContent='🌙'; } 
+  else { html.dataset.theme='dark'; btn.textContent='☀'; }
+}
+
+// LANGUAGE
+let currentLang = 'en';
+function toggleLang() {
+  const html = document.documentElement;
+  const btn = document.getElementById('langBtn');
+  if (currentLang==='en') {
+    currentLang='fr'; html.dataset.lang='fr'; btn.textContent='EN';
+    document.querySelectorAll('.en').forEach(el=>el.style.display='none');
+    document.querySelectorAll('.fr').forEach(el=>el.style.display='');
+  } else {
+    currentLang='en'; html.dataset.lang='en'; btn.textContent='FR';
+    document.querySelectorAll('.fr').forEach(el=>el.style.display='none');
+    document.querySelectorAll('.en').forEach(el=>el.style.display='');
+  }
+}
+
+// INTERSECTION OBSERVER
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+document.querySelectorAll('.reveal, .timeline-item').forEach(el=>observer.observe(el));
+
+// CONTACT
+function handleContact() {
+  const inputs = document.querySelectorAll('.contact-form input, .contact-form textarea');
+  const filled = Array.from(inputs).every(i=>i.value.trim());
+  if (!filled) { alert('Please fill all fields / Remplissez tous les champs'); return; }
+  const email = document.querySelector('.contact-form input[type="email"]').value;
+  const subj = document.querySelector('.contact-form input[type="text"]:nth-child(1)').value;
+  const msg = document.querySelector('.contact-form textarea').value;
+  window.location.href = `mailto:selssabilakz@gmail.com?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(msg)}`;
+}
+
+// SMOOTH NAV
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click', e=>{
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if(t) t.scrollIntoView({behavior:'smooth'});
+  });
+});
+
+// TYPING EFFECT on hero
+const heroName = document.querySelector('.hero-name .accent');
+// subtle glow on scroll
+window.addEventListener('scroll', ()=>{
+  const scrollY = window.scrollY;
+  const nav = document.querySelector('nav');
+  if (scrollY > 80) nav.style.borderBottomColor = 'var(--accent)';
+  else nav.style.borderBottomColor = 'var(--border)';
+});
+</script>
+</body>
+</html>
